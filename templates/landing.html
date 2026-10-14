@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MemoryLog</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins', sans-serif;
+
+            background: linear-gradient(to right, #0f1b4c, #243b9f);
+
+            color:white;
+
+            min-height:100vh;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+
+            width:100%;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:22px 70px;
+
+            background:rgba(0,0,0,0.15);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo{
+
+            font-size:38px;
+            font-weight:700;
+
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .nav-buttons{
+            display:flex;
+            gap:15px;
+        }
+
+        .nav-btn{
+
+            text-decoration:none;
+
+            padding:12px 24px;
+
+            border-radius:10px;
+
+            font-size:15px;
+            font-weight:600;
+
+            transition:0.3s;
+        }
+
+        .login-btn{
+            color:white;
+        }
+
+        .register-btn{
+            background:#3bb3ff;
+            color:white;
+        }
+
+        .register-btn:hover{
+            background:#2196f3;
+        }
+
+        /* HERO SECTION */
+
+        .hero{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:100px 120px;
+
+            min-height:80vh;
+        }
+
+        .hero-left{
+            width:55%;
+        }
+
+        .hero-left h1{
+
+            font-size:75px;
+            line-height:1.2;
+
+            margin-bottom:30px;
+        }
+
+        .hero-left p{
+
+            font-size:28px;
+            line-height:1.7;
+
+            color:#d8d8d8;
+
+            margin-bottom:40px;
+        }
+
+        .hero-buttons{
+            display:flex;
+            gap:20px;
+        }
+
+        .hero-btn{
+
+            text-decoration:none;
+
+            padding:18px 35px;
+
+            border-radius:12px;
+
+            font-size:18px;
+            font-weight:600;
+
+            transition:0.3s;
+        }
+
+        .get-btn{
+            background:#22c55e;
+            color:white;
+        }
+
+        .get-btn:hover{
+            background:#16a34a;
+        }
+
+        .hero-login-btn{
+            background:#facc15;
+            color:black;
+        }
+
+        .hero-login-btn:hover{
+            background:#eab308;
+        }
+
+        /* RIGHT SIDE */
+
+        .hero-right{
+            width:40%;
+            text-align:center;
+        }
+
+        .emoji-box{
+
+            font-size:60px;
+
+            margin-bottom:25px;
+        }
+
+        .hero-right h2{
+
+            font-size:30px;
+
+            margin-bottom:15px;
+        }
+
+        .hero-right p{
+
+            font-size:22px;
+
+            color:#d8d8d8;
+        }
+
+        /* FEATURES */
+
+        .features{
+
+            width:100%;
+
+            background:#020b2d;
+
+            padding:70px 80px;
+
+            display:grid;
+
+            grid-template-columns:repeat(3,1fr);
+
+            gap:30px;
+        }
+
+        .feature-card{
+
+            text-align:center;
+
+            padding:40px 20px;
+        }
+
+        .feature-card .icon{
+            font-size:50px;
+            margin-bottom:20px;
+        }
+
+        .feature-card h3{
+
+            font-size:30px;
+
+            margin-bottom:15px;
+        }
+
+        .feature-card p{
+
+            font-size:20px;
+
+            line-height:1.6;
+
+            color:#d8d8d8;
+        }
+
+        footer{
+
+            text-align:center;
+
+            padding:25px;
+
+            background:#020b2d;
+
+            color:#bbb;
+
+            font-size:18px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1000px){
+
+            .hero{
+                flex-direction:column;
+                text-align:center;
+                padding:80px 40px;
+            }
+
+            .hero-left,
+            .hero-right{
+                width:100%;
+            }
+
+            .hero-left h1{
+                font-size:50px;
+            }
+
+            .hero-left p{
+                font-size:22px;
+            }
+
+            .hero-buttons{
+                justify-content:center;
+            }
+
+            .features{
+                grid-template-columns:1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            🧠 MemoryLog
+        </div>
+
+        <div class="nav-buttons">
+
+            <a href="/login_form" class="nav-btn login-btn">
+                Login
+            </a>
+
+            <a href="/register" class="nav-btn register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <h1>
+                Track Memory.
+                <br>
+                Protect Life.
+            </h1>
+
+            <p>
+
+                MemoryLog helps patients monitor cognitive health,
+                enables caregivers to stay connected,
+                and provides early dementia detection using AI.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/register" class="hero-btn get-btn">
+                    Get Started
+                </a>
+
+                <a href="/login_form" class="hero-btn hero-login-btn">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-right">
+
+            <div class="emoji-box">
+                🧠 + 📊 + 📍
+            </div>
+
+            <h2>
+                Games • AI Detection • Live Tracking
+            </h2>
+
+            <p>
+                Smart monitoring for cognitive healthcare.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <div class="icon">
+                🎮
+            </div>
+
+            <h3>
+                Memory Games
+            </h3>
+
+            <p>
+                Improve cognitive skills with
+                interactive exercises.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon">
+                📊
+            </div>
+
+            <h3>
+                AI Detection
+            </h3>
+
+            <p>
+                Early dementia risk prediction
+                using smart analysis.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon">
+                📍
+            </div>
+
+            <h3>
+                Live Tracking
+            </h3>
+
+            <p>
+                Caregivers can monitor patient
+                location in real-time.
+            </p>
+
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 MemoryLog | Healthcare Monitoring System
+    </footer>
+
+</body>
+</html>

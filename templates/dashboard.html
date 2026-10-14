@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Dashboard</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:#020817;
+            color:white;
+            font-family:Poppins,sans-serif;
+        }
+
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:270px;
+            background:#1e293b;
+            padding:30px 20px;
+            position:sticky;
+            top:0;
+            height:100vh;
+        }
+
+        .logo{
+            font-size:34px;
+            font-weight:bold;
+            margin-bottom:40px;
+        }
+
+        .menu{
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+        }
+
+        .menu a{
+            text-decoration:none;
+            background:#334155;
+            color:white;
+            padding:16px;
+            border-radius:12px;
+            transition:0.3s;
+            text-align:center;
+        }
+
+        .menu a:hover{
+            background:#475569;
+        }
+
+        /* MAIN */
+
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        h1{
+            font-size:50px;
+            margin-bottom:30px;
+        }
+
+        .section-title{
+            font-size:35px;
+            margin-bottom:25px;
+        }
+
+        /* TOP CARDS */
+
+        .top-cards{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:25px;
+            margin-bottom:40px;
+        }
+
+        .card{
+            background:#1e293b;
+            padding:35px;
+            border-radius:18px;
+            text-align:center;
+        }
+
+        .card h3{
+            margin-bottom:15px;
+            font-size:30px;
+        }
+
+        .card p{
+            font-size:45px;
+            font-weight:bold;
+            color:#60a5fa;
+        }
+
+        /* RESULT */
+
+        .result-card{
+            background:#1e293b;
+            padding:30px;
+            border-radius:18px;
+            margin-bottom:35px;
+            border-left:6px solid #2563eb;
+        }
+
+        .result-card h2{
+            margin-bottom:15px;
+            font-size:30px;
+        }
+
+        .score{
+            font-size:25px;
+            margin-bottom:15px;
+            color:#60a5fa;
+        }
+
+        .status{
+            font-size:20px;
+            font-weight:bold;
+        }
+
+        /* GAMES */
+
+        .games-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:25px;
+        }
+
+        .game-card{
+            background:#1e293b;
+            padding:30px;
+            border-radius:18px;
+            text-align:center;
+        }
+
+        .game-icon{
+            font-size:55px;
+            margin-bottom:20px;
+        }
+
+        .game-card h3{
+            font-size:28px;
+            margin-bottom:15px;
+        }
+
+        .game-card p{
+            margin-bottom:20px;
+            color:#cbd5e1;
+        }
+
+        .play-btn{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:12px 28px;
+            border-radius:10px;
+            cursor:pointer;
+            text-decoration:none;
+            display:inline-block;
+        }
+
+        .play-btn:hover{
+            background:#1d4ed8;
+        }
+
+        /* TABLE */
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:#1e293b;
+            border-radius:15px;
+            overflow:hidden;
+        }
+
+        th{
+            background:#334155;
+            padding:18px;
+            text-align:left;
+        }
+
+        td{
+            padding:18px;
+            border-bottom:1px solid #334155;
+        }
+
+        tr:hover{
+            background:#273449;
+        }
+
+        .score-badge{
+            padding:8px 15px;
+            border-radius:8px;
+            color:white;
+            font-weight:bold;
+        }
+
+        /* LOCATION */
+
+        #googleMap{
+            width:100%;
+            height:500px;
+            border-radius:18px;
+            border:none;
+            background:white;
+        }
+
+        /* FORM */
+
+        select{
+            width:100%;
+            padding:12px;
+            border-radius:10px;
+            border:none;
+            margin-top:15px;
+        }
+
+        .history-section{
+            margin-top:60px;
+        }
+
+        @media(max-width:1000px){
+
+            .dashboard{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                height:auto;
+            }
+
+            .games-grid{
+                grid-template-columns:1fr;
+            }
+
+            .top-cards{
+                grid-template-columns:1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🧠 MemoryLog
+        </div>
+
+        <div class="menu">
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="#games">Games</a>
+
+            <a href="#assessment">Assessment</a>
+
+            <a href="#history">History</a>
+
+            <a href="#location">
+                📍 Location
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <h1>
+            Patient Dashboard
+        </h1>
+
+        <!-- RESULT -->
+
+        <div class="result-card">
+
+            <h2>
+                🧠 Cognitive Assessment
+            </h2>
+
+            <div class="score">
+                Score:
+                {{ assessment_score }}
+            </div>
+
+            <div class="status">
+
+                {% if assessment_score <= 5 %}
+
+                    <span style="color:#22c55e;">
+                        ✅ Normal Cognitive Health
+                    </span>
+
+                {% elif assessment_score <= 12 %}
+
+                    <span style="color:#facc15;">
+                        ⚠ Mild Cognitive Decline
+                    </span>
+
+                {% else %}
+
+                    <span style="color:#ef4444;">
+                        🚨 High Dementia Risk
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- TOP CARDS -->
+
+        <div class="top-cards">
+
+            <div class="card">
+
+                <h3>
+                    Latest Score
+                </h3>
+
+                <p>
+
+                    {% if history %}
+                        {{ history[0]['score'] }}
+                    {% else %}
+                        0
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Games Played
+                </h3>
+
+                <p>
+                    {{ history|length }}
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- GAMES -->
+
+        <div id="games" class="history-section">
+
+            <div class="section-title">
+                Cognitive Games
+            </div>
+
+            <div class="games-grid">
+
+                <div class="game-card">
+
+                    <div class="game-icon">🧩</div>
+
+                    <h3>Matching</h3>
+
+                    <p>
+                        Improve memory and concentration.
+                    </p>
+
+                    <a href="/test/matching"
+                       class="play-btn">
+                        Play
+                    </a>
+
+                </div>
+
+                <div class="game-card">
+
+                    <div class="game-icon">📝</div>
+
+                    <h3>Word Recall</h3>
+
+                    <p>
+                        Strengthen memory recall.
+                    </p>
+
+                    <a href="/test/words"
+                       class="play-btn">
+                        Play
+                    </a>
+
+                </div>
+
+                <div class="game-card">
+
+                    <div class="game-icon">💡</div>
+
+                    <h3>Pattern</h3>
+
+                    <p>
+                        Train sequence recognition.
+                    </p>
+
+                    <a href="/test/pattern"
+                       class="play-btn">
+                        Play
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ASSESSMENT -->
+
+        <div id="assessment"
+             class="history-section">
+
+            <div class="section-title">
+                Cognitive Assessment
+            </div>
+
+            <form method="POST"
+                  action="/assessment">
+
+                <div class="games-grid">
+
+                    {% for i in range(1,11) %}
+
+                    <div class="game-card">
+
+                        <p>
+
+                        {% if i == 1 %}
+                        Do you forget recent conversations?
+
+                        {% elif i == 2 %}
+                        Do you misplace items frequently?
+
+                        {% elif i == 3 %}
+                        Do daily tasks feel difficult?
+
+                        {% elif i == 4 %}
+                        Do you feel confused about time?
+
+                        {% elif i == 5 %}
+                        Do you get lost in familiar places?
+
+                        {% elif i == 6 %}
+                        Difficulty finding words?
+
+                        {% elif i == 7 %}
+                        Repeat same questions often?
+
+                        {% elif i == 8 %}
+                        Difficulty concentrating?
+
+                        {% elif i == 9 %}
+                        Confused handling money?
+
+                        {% elif i == 10 %}
+                        Need help in daily tasks?
+
+                        {% endif %}
+
+                        </p>
+
+                        <select name="q{{i}}">
+
+                            <option value="0">
+                                No
+                            </option>
+
+                            <option value="1">
+                                Sometimes
+                            </option>
+
+                            <option value="2">
+                                Often
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <br>
+
+                <button type="submit"
+                        class="play-btn">
+
+                    Submit Assessment
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- HISTORY -->
+
+        <div id="history"
+             class="history-section">
+
+            <div class="section-title">
+                Game History
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date</th>
+                        <th>Game</th>
+                        <th>Score</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in history %}
+
+                    <tr>
+
+                        <td>
+                            {{ row['date'] }}
+                        </td>
+
+                        <td>
+                            {{ row['game_name'] }}
+                        </td>
+
+                        <td>
+
+                            <span class="score-badge"
+
+                            style="
+                            background:
+                            {% if row['score'] >= 80 %}
+                                #16a34a
+                            {% elif row['score'] >= 50 %}
+                                #eab308
+                            {% else %}
+                                #dc2626
+                            {% endif %}
+                            ">
+
+                                {{ row['score'] }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="3">
+                            No game history available
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- LOCATION -->
+
+        <div id="location"
+             class="history-section">
+
+            <div class="section-title">
+                Live Location
+            </div>
+
+            <iframe id="googleMap"
+                    loading="lazy"
+                    allowfullscreen>
+            </iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- LOCATION SCRIPT -->
+
+<script>
+
+async function shareLocation(){
+
+    if(!navigator.geolocation){
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        async function(position){
+
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
+
+            // UPDATE MAP
+
+            document.getElementById(
+                "googleMap"
+            ).src =
+
+            `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+
+            // SAVE LOCATION
+
+            await fetch("/save_location",{
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    latitude:lat,
+                    longitude:lng
+
+                })
+
+            });
+
+        }
+
+    );
+
+}
+
+// AUTO LOCATION UPDATE
+
+window.onload = function(){
+
+    shareLocation();
+
+    setInterval(
+        shareLocation,
+        10000
+    );
+
+};
+
+</script>
+
+</body>
+</html>

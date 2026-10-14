@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Recall</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* --- STYLES FOR WORDS GAME --- */
+        #word-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+
+        .word-card {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- NEW: TIMER BAR STYLES --- */
+        #timer-container {
+            width: 80%;
+            max-width: 500px;
+            height: 12px;
+            background-color: #eee;
+            border-radius: 6px;
+            margin: 0 auto 30px auto; /* Centered */
+            overflow: hidden;
+            display: none; /* Hidden by default */
+        }
+
+        #timer-bar {
+            width: 100%;
+            height: 100%;
+            background-color: #28a745; /* Green */
+            transform-origin: left;
+        }
+
+        .large-text { font-size: 1.2rem; color: #555; margin-bottom: 10px; }
+        
+        input[type="text"] {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">MemoryLog</div>
+        <a href="/dashboard" class="btn-logout">Exit</a>
+    </nav>
+    <div class="container">
+        <h2>Word Recall</h2>
+        <p id="instruction-text" class="large-text">Memorize these words...</p>
+        
+        <div id="word-container">
+            <div class="large-text">Loading...</div>
+        </div>
+
+        <div id="timer-container">
+            <div id="timer-bar"></div>
+        </div>
+        
+        <div id="input-area" style="display:none;">
+            <p>Type the words you remember:</p>
+            <input type="text" id="user-words" placeholder="e.g. Apple Dog Tree" autocomplete="off">
+            <br><br>
+            <button onclick="checkWords()" class="btn-primary">Submit Answer</button>
+        </div>
+    </div>
+    
+    <script src="/static/script.js"></script>
+    <script>initWords();</script>
+</body>
+</html>

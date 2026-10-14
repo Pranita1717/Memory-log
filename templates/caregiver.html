@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Caregiver Dashboard</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:#020817;
+            color:white;
+            font-family:Poppins,sans-serif;
+        }
+
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:270px;
+            background:#1e293b;
+            padding:30px 20px;
+            position:sticky;
+            top:0;
+            height:100vh;
+        }
+
+        .logo{
+            font-size:34px;
+            font-weight:bold;
+            margin-bottom:40px;
+        }
+
+        .menu{
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+        }
+
+        .menu a{
+            text-decoration:none;
+            background:#334155;
+            color:white;
+            padding:16px;
+            border-radius:12px;
+            transition:0.3s;
+            text-align:center;
+        }
+
+        .menu a:hover{
+            background:#475569;
+        }
+
+        /* MAIN */
+
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        h1{
+            font-size:50px;
+            margin-bottom:35px;
+        }
+
+        .patient-card{
+            background:#1e293b;
+            padding:30px;
+            border-radius:20px;
+            margin-bottom:40px;
+        }
+
+        .section-title{
+            font-size:32px;
+            margin-bottom:25px;
+        }
+
+        /* TABLE */
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:#0f172a;
+            border-radius:15px;
+            overflow:hidden;
+        }
+
+        th{
+            background:#334155;
+            padding:18px;
+            text-align:left;
+        }
+
+        td{
+            padding:18px;
+            border-bottom:1px solid #334155;
+        }
+
+        tr:hover{
+            background:#273449;
+        }
+
+        .score-badge{
+            padding:8px 15px;
+            border-radius:8px;
+            color:white;
+            font-weight:bold;
+        }
+
+        /* ASSESSMENT */
+
+        .assessment-box{
+            margin-top:30px;
+            background:#0f172a;
+            padding:25px;
+            border-radius:15px;
+        }
+
+        .assessment-box h3{
+            margin-bottom:20px;
+            font-size:28px;
+        }
+
+        .status{
+            margin-top:15px;
+            padding:15px;
+            border-radius:10px;
+            font-weight:bold;
+        }
+
+        .good{
+            background:#16a34a;
+        }
+
+        .warning{
+            background:#eab308;
+            color:black;
+        }
+
+        .danger{
+            background:#dc2626;
+        }
+
+        /* LOCATION */
+
+        iframe{
+            width:100%;
+            height:450px;
+            border:none;
+            border-radius:15px;
+            margin-top:20px;
+        }
+
+        /* HISTORY */
+
+        .history-box{
+            margin-top:30px;
+        }
+
+        @media(max-width:1000px){
+
+            .dashboard{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                height:auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🧠 MemoryLog
+        </div>
+
+        <div class="menu">
+
+            <a href="/caregiver">
+                Dashboard
+            </a>
+
+            <a href="#patients">
+                Patients
+            </a>
+
+            <a href="#assessment">
+                Assessment
+            </a>
+
+            <a href="#games">
+                Game Results
+            </a>
+
+            <a href="#location">
+                Live Location
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <h1>
+            Caregiver Dashboard
+        </h1>
+
+        {% for patient in patients %}
+
+        <div class="patient-card" id="patients">
+
+            <!-- PATIENT INFO -->
+
+            <div class="section-title">
+
+                👤 Patient:
+                {{ patient.username }}
+
+            </div>
+
+            <!-- LOCATION -->
+
+            <div id="location">
+
+                <h2 class="section-title">
+                    📍 Live Location
+                </h2>
+
+                {% if patient.latitude and patient.longitude %}
+
+                <iframe
+                    src="https://maps.google.com/maps?q={{ patient.latitude }},{{ patient.longitude }}&z=15&output=embed">
+                </iframe>
+
+                <br><br>
+
+                <p>
+
+                    Latitude:
+                    {{ patient.latitude }}
+
+                </p>
+
+                <p>
+
+                    Longitude:
+                    {{ patient.longitude }}
+
+                </p>
+
+                {% else %}
+
+                <p>
+                    Location Not Available
+                </p>
+
+                {% endif %}
+
+            </div>
+
+            <!-- ASSESSMENT -->
+
+            <div
+                class="assessment-box"
+                id="assessment"
+            >
+
+                <h3>
+                    🧠 Cognitive Assessment
+                </h3>
+
+                <p>
+
+                    Score:
+                    {{ patient.assessment_score }}
+
+                </p>
+
+                {% if patient.assessment_score <= 5 %}
+
+                    <div class="status good">
+
+                        ✅ Normal Cognitive Health
+
+                    </div>
+
+                {% elif patient.assessment_score <= 12 %}
+
+                    <div class="status warning">
+
+                        ⚠ Mild Cognitive Decline
+
+                    </div>
+
+                {% else %}
+
+                    <div class="status danger">
+
+                        🚨 High Dementia Risk
+
+                    </div>
+
+                {% endif %}
+
+                <br>
+
+                <p>
+
+                    Result:
+                    {{ patient.assessment_result }}
+
+                </p>
+
+            </div>
+
+            <!-- GAME HISTORY -->
+
+            <div
+                class="history-box"
+                id="games"
+            >
+
+                <h2 class="section-title">
+                    🎮 Game Results
+                </h2>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+                            <th>Game</th>
+                            <th>Score</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for game in patient.game_history %}
+
+                        <tr>
+
+                            <td>
+                                {{ game.date }}
+                            </td>
+
+                            <td>
+                                {{ game.game_name }}
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="score-badge"
+
+                                    style="
+                                    background:
+                                    {% if game.score >= 80 %}
+                                        #16a34a
+                                    {% elif game.score >= 50 %}
+                                        #eab308
+                                    {% else %}
+                                        #dc2626
+                                    {% endif %}
+                                    "
+                                >
+
+                                    {{ game.score }}
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="3">
+
+                                No game history available.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="patient-card">
+
+            <h2>
+                No linked patients found.
+            </h2>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

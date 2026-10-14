@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pattern Game</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">MemoryLog</div>
+        <a href="/dashboard" class="btn-logout">Exit</a>
+    </nav>
+    <div class="container">
+        <h2>Pattern Sequence</h2>
+        <p id="msg" class="large-text">Ready?</p>
+        
+        <div class="pattern-grid">
+            <div class="pad" id="pad-0" onclick="padClick(0)"></div>
+            <div class="pad" id="pad-1" onclick="padClick(1)"></div>
+            <div class="pad" id="pad-2" onclick="padClick(2)"></div>
+            <div class="pad" id="pad-3" onclick="padClick(3)"></div>
+        </div>
+        
+        <button id="start-btn" onclick="startPattern()" class="btn-primary">Start</button>
+    </div>
+    <script src="/static/script.js"></script>
+    
+</body>
+</html>

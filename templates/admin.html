@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins', sans-serif;
+            background:#020817;
+            color:white;
+        }
+
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:280px;
+            background:#1e293b;
+            padding:30px 20px;
+            position:sticky;
+            top:0;
+            height:100vh;
+        }
+
+        .logo{
+            font-size:34px;
+            font-weight:bold;
+            margin-bottom:50px;
+        }
+
+        .menu{
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+
+        .menu a{
+            text-decoration:none;
+            color:white;
+            background:#334155;
+            padding:18px;
+            border-radius:12px;
+            text-align:center;
+            transition:0.3s;
+            font-size:16px;
+        }
+
+        .menu a:hover{
+            background:#475569;
+        }
+
+        /* MAIN */
+
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        .main h1{
+            font-size:55px;
+            margin-bottom:40px;
+        }
+
+        /* CARDS */
+
+        .cards{
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            gap:25px;
+            margin-bottom:40px;
+        }
+
+        .card{
+            background:#1e293b;
+            padding:35px;
+            border-radius:18px;
+            text-align:center;
+        }
+
+        .card h3{
+            font-size:28px;
+            margin-bottom:15px;
+        }
+
+        .card p{
+            font-size:45px;
+            font-weight:bold;
+            color:#60a5fa;
+        }
+
+        /* TABLE */
+
+        .table-box{
+            background:#1e293b;
+            padding:30px;
+            border-radius:20px;
+            overflow-x:auto;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th{
+            background:#2563eb;
+            padding:18px;
+            text-align:left;
+            font-size:18px;
+        }
+
+        td{
+            background:#334155;
+            padding:18px;
+            border-bottom:1px solid #475569;
+            font-size:16px;
+        }
+
+        tr:hover td{
+            background:#475569;
+        }
+
+        /* ROLE BADGES */
+
+        .badge{
+            padding:8px 15px;
+            border-radius:10px;
+            font-weight:bold;
+        }
+
+        .patient{
+            background:#16a34a;
+        }
+
+        .caregiver{
+            background:#eab308;
+            color:black;
+        }
+
+        .admin{
+            background:#dc2626;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1000px){
+
+            .dashboard{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                height:auto;
+                position:relative;
+            }
+
+            .cards{
+                grid-template-columns:1fr;
+            }
+
+            .main h1{
+                font-size:40px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            🧠 MemoryLog
+        </div>
+
+        <div class="menu">
+
+            <a href="/admin">
+                Dashboard
+            </a>
+
+            <a href="#users">
+                Users
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+        <!-- STATS -->
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>
+                    Total Users
+                </h3>
+
+                <p>
+                    {{ users|length }}
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Patients
+                </h3>
+
+                <p>
+
+                    {{ users.values() | selectattr("role", "equalto", "patient") | list | length }}
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    Caregivers
+                </h3>
+
+                <p>
+
+                    {{ users.values() | selectattr("role", "equalto", "caregiver") | list | length }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- USERS TABLE -->
+
+        <div
+            id="users"
+            class="table-box"
+        >
+
+            <h2
+                style="
+                    margin-bottom:25px;
+                    font-size:35px;
+                "
+            >
+
+                System Users
+
+            </h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Linked Patient</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for user in data["users"] %}
+
+                    <tr>
+
+                        <td>
+                            {{ username }}
+                        </td>
+
+                        <td>
+
+                            {% if info.role == "patient" %}
+
+                                <span class="badge patient">
+                                    Patient
+                                </span>
+
+                            {% elif info.role == "caregiver" %}
+
+                                <span class="badge caregiver">
+                                    Caregiver
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge admin">
+                                    Admin
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {{ info.get("linked_patient","-") }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
