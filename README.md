@@ -52,3 +52,25 @@ Memory-Log/
     ├── test.html
     ├── test_pattern.html
     └── test_words.html
+
+## 🎯 Project Scope
+
+Memory Log focuses on memory-related activities, cognitive assessments, performance tracking, and caregiver support. It aims to provide a centralized platform that makes these activities easier to access and manage.
+
+## 🔮 Future Enhancements
+
+- Additional cognitive games and assessment activities.
+- Improved progress visualization and reporting.
+- Enhanced accessibility for users.
+- Improved caregiver support features.
+- Additional privacy and security improvements.
+
+## 👩‍💻 Developer
+
+**Pranita Deshmukh**
+
+GitHub: [Pranita1717](https://github.com/Pranita1717)
+
+## 📄 Project Type
+
+Academic Project – MCA
